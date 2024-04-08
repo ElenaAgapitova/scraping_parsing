@@ -8,8 +8,9 @@ from bs4 import BeautifulSoup
 BASE_URL = 'https://books.toscrape.com/catalogue/'
 
 
-def get_number_books(path_file) -> list:
+def get_number_description_books(path_file) -> tuple:
     number_books = []
+    description_books = []
 
     try:
         with open(path_file, 'r', encoding='utf-8') as file:
@@ -22,8 +23,10 @@ def get_number_books(path_file) -> list:
             html = response.content
             soup = BeautifulSoup(html, 'html.parser')
             number = int(soup.find('p', {'class': 'instock availability'}).text.split()[2][1:])
+            description = soup.find('meta', {'name': 'description'})['content'].strip()
             number_books.append(number)
-            time.sleep(random.randint(2, 5))
-        return number_books
+            description_books.append(description)
+            time.sleep(random.randint(1, 2))
+        return number_books, description_books
     except Exception as e:
         print(e)

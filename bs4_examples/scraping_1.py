@@ -30,7 +30,6 @@ def get_file(file_name):
 
             with open(file_name, 'a', encoding='utf-8') as file:
                 file.write(str(soup.find('ol', {'class': 'row'})))
-
-            time.sleep(random.randint(1, 5))
+            time.sleep(random.randint(1, 2))
     except Exception as e:
         print(e)
